@@ -1,0 +1,39 @@
+﻿<ul class="navbar-nav">
+
+
+
+    @if (@Context.User.Identity.IsAuthenticated == false)
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="https://youthcrisiscenter.org/wp-content/uploads/2017/05/profile_placeholder.jpg" width="40" height="40" class="rounded-circle">
+            </a>
+
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" asp-controller="User" asp-action="Profile">LogIn</a>
+            </div>
+        </li>
+    }
+    else
+    {
+
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="User" asp-action="Profile" >
+                <img src="~/images/@Context.User.FindFirst("profileimage").Value" width="40" height="40" class="rounded-circle"> Hola, @Context.User.Identity.Name
+
+            </a>
+
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Manage" asp-action="LogOut">Log Out</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="User" asp-action="ListaPedidos">Mis Pedidos</a>
+        </li>
+    }
+
+
+
+
+</ul>

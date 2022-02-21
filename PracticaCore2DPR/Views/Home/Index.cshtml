@@ -1,0 +1,146 @@
+﻿@model IEnumerable<PracticaCore2DPR.Models.Libro>
+
+@{
+    ViewData["Title"] = "Index";
+    int page = ViewBag.page;
+    int total = ViewBag.count;
+    int perPage = ViewBag.perPage;
+    String action = ViewBag.action;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idLibro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.autor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.editorial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.portada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.resumen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idGenero)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idLibro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.autor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.editorial)
+                </td>
+                <td>
+                    <img style="height:300px; width:200px" src="~/images/@item.portada" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.resumen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idGenero)
+                </td>
+                <td>
+                    <a class="btn btn-secondary" asp-controller="Details" asp-action="Details" asp-route-idLibro="@item.idLibro">Detalles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (action == "normal") {
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+
+        @if (page == 1)
+        {
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(page - 1)">Previous</a>
+            </li>
+        }
+
+        @for (int i = page - 3; i <= page + 3; i++)
+        {
+            if (i >= 1 && (i * perPage) - (perPage) < total)
+            {
+
+
+                if (i == page)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@i">
+                            @i
+                            <span class="sr-only">@i</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@i">@i</a></li>
+                }
+            }
+
+        }
+
+
+
+
+
+
+
+
+        @if (perPage * page >= total)
+        {
+            <li class="page-item disabled">
+                <a class="page-link">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@(page + 1)">Next</a>
+            </li>
+        }
+
+
+    </ul>
+</nav>
+}
